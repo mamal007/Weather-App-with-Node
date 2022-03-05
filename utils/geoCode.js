@@ -6,16 +6,16 @@ const geoCode = (address, callback) => {
     encodeURIComponent(address) +
     ".json?access_token=pk.eyJ1IjoibXJhc2dhcmkiLCJhIjoiY2wwY201ZG83MDBqZzNrbTh4M2Jna2V2ZiJ9.KOkjZW3tfPI5ZmHp7wtxnw&limit=1";
 
-  request({ url: url, json: true }, (error, response) => {
+  request({ url, json: true }, (error, {body} = {}) => {
     if (error) {
       callback("Unable to connect to mapbox service!", undefined);
-    } else if (response.body.features.length === 0) {
+    } else if (body.features.length === 0) {
       callback("Unable to connect to mapboxfind the location!", undefined);
     } else {
       callback(undefined, {
-        latitude: response.body.features[0].center[0],
-        longitude: response.body.features[0].center[1],
-        location: response.body.features[0].place_name,
+        latitude: body.features[0].center[1],
+        longitude: body.features[0].center[0],
+        location: body.features[0].place_name,
       });
     }
   });
